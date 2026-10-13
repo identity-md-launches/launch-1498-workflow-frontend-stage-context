@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-13T04:40:36.185002+00:00",
+  "newFiles": 71,
+  "newFileBytes": 3165991,
+  "candidateWorkingTreeBlobBytes": 4279556,
+  "existingGitDirectoryBytes": 195653,
+  "conservativeBytesIncludingOneMiBPackagingAllowance": 5523785,
+  "budgetBytes": 8388608,
+  "scope": "Only web/, dist/ and new docs/ files; no tracked preexisting file changed",
+  "generatedDependenciesInCandidateFiles": false,
+  "submodules": false,
+  "commitBundle": "Not emitted: .git is read-only. Sizes above are working-tree plus existing Git storage measurements, not an actual pack measurement.",
+  "finalDeploymentManifestSha256": "cd3d9ee7c92645dca537aa483a31a967816d00c51744fb2c2b6262501d7e3ea3",
+  "note": "This report excludes its own bytes; the 1 MiB packaging allowance covers this report and remaining validation text."
+}

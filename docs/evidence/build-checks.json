@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-10-13T04:41:08.633040+00:00",
+  "typecheck": "tsc --noEmit passed",
+  "build": "Vite production build passed, 435 modules, 15 inventory assets; final rebuild byte-identical to browser-tested export",
+  "unitTests": {
+    "passed": 9,
+    "failed": 0,
+    "file": "web/tests/rules.test.ts"
+  },
+  "manifestVerification": {
+    "pass": true,
+    "contracts": 2,
+    "assets": 15,
+    "exportBytes": 1314705,
+    "abiHashes": "canonical Keccak verified",
+    "assetHashes": "SHA-256 verified",
+    "poolKey": "exact",
+    "network": "exact"
+  },
+  "browserScenarios": {
+    "passed": 13,
+    "failed": 0,
+    "details": "browser-results.json"
+  },
+  "designProbe": {
+    "passed": 16,
+    "failed": 0,
+    "details": "taste.json"
+  },
+  "liveTransactionsBroadcast": 0
+}

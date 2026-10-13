@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="PEPEFRONT: Pepe squads advance between cyan and magenta bases across a glowing crystal basin">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#142e30"/><stop offset="1" stop-color="#090f13"/></linearGradient>
+ <linearGradient id="crystal" x2="1" y2="1"><stop stop-color="#ccf78e"/><stop offset="1" stop-color="#1d9672"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#71eda0" stop-opacity=".3"/><stop offset="1" stop-color="#71eda0" stop-opacity="0"/></radialGradient>
+ <g id="gem"><path d="m0 0 17-58 17 51L17 18z" fill="url(#crystal)"/><path d="m17-58 0 76 17-25z" fill="#54b774"/></g>
+ <g id="pepe"><ellipse cx="0" cy="38" rx="32" ry="13" fill="none" stroke="#63e9cf" stroke-width="2"/><path d="m-22 30 5-30 35-3 12 30-16 11-34-4z" fill="#455a44"/><path d="m-24-9 8-27 30-4 18 21-5 22-16 13-29-11z" fill="#84b559"/><path d="m-26-17 11-27 25-7 24 19 3 17-13-8-37 7z" fill="#3d514a"/><path d="m-16-18 18-3 2 16-18 3zm23-3 19 5-2 15-18-4z" fill="#e7edbc"/><path d="M-5-18h7v12h-7zm13 0h7v12H8z" fill="#17251e"/><path d="m-14 8 27 4 10-7" stroke="#416238" stroke-width="5" fill="none"/><path d="m-8 10 21 2 8-6" stroke="#c4d77b" stroke-width="2" fill="none"/><path d="M-11 27h6m3 0h6m3 0h6" stroke="#81efcd" stroke-width="4"/><path d="m25 12 34-5 3 9-35 7z" fill="#16282b"/></g>
+ <g id="base"><path d="m-92 37 75-48 114 43-75 49z" fill="#172e31"/><path d="m-70-16 72-40 72 32-68 42z" fill="#647470"/><path d="m-70-16 76 34v50L-70 34z" fill="#354d4a"/><path d="m6 18 68-42v52L6 68z" fill="#243b3b"/><path d="m-70-12 76 34 68-42" fill="none" stroke="currentColor" stroke-width="6"/><path d="m-40 12 18 8v10l-18-8zm34 15 15 6v11l-15-7z" fill="currentColor"/><path d="m-30-41 21-13 29 11-24 16z" fill="#93a195"/><path d="M-8-50v-65" stroke="#799a85" stroke-width="4"/><path d="m-26-101 14-23 27 16-16 14z" fill="#719187"/></g>
+</defs>
+<rect width="1200" height="630" fill="url(#sky)"/>
+<path d="M0 152 109 174 169 141 285 159 342 123 461 158 615 113 704 145 852 102 992 142 1101 89 1200 112V630H0z" fill="#172e2e"/>
+<path d="M0 350 440 124 1200 334v202L667 668 0 497z" fill="#304940"/><path d="m0 497 667 171 533-132v29L667 703 0 521z" fill="#152c29"/>
+<path d="m115 494 912-273 40 14-914 276z" fill="#536056"/><path d="m224 211 710 372 39-12-710-372z" fill="#43594f"/>
+<path d="m198 480 720-212" stroke="#9b9c71" stroke-width="2" stroke-dasharray="14 15"/>
+<path d="m127 274 64-35 45 24-48 28zm797 148 57-35 32 30-54 24zm-533-74 31-53 35 25-3 40zm-240 33 39-29 22 32-47 13z" fill="#203a33"/>
+<use href="#base" x="255" y="386" color="#65ddce" transform="translate(-15 -10) scale(1.05)"/>
+<use href="#base" x="932" y="251" color="#ee8db2"/>
+<use href="#base" x="972" y="378" color="#ee8db2" transform="translate(466 145) scale(.55)"/>
+<ellipse cx="633" cy="347" rx="177" ry="86" fill="url(#glow)"/>
+<use href="#gem" x="593" y="363"/><use href="#gem" x="639" y="361" transform="translate(-72 -97) scale(1.18)"/><use href="#gem" x="612" y="398"/><use href="#gem" x="679" y="382"/><use href="#gem" x="697" y="348"/>
+<use href="#gem" x="867" y="502" transform="translate(217 125) scale(.7)"/>
+<use href="#pepe" x="424" y="410"/><use href="#pepe" x="485" y="450"/><use href="#pepe" x="362" y="462"/>
+<use href="#pepe" x="670" y="493" transform="translate(-165 -10) scale(1.16)"/>
+<use href="#pepe" x="751" y="309" transform="translate(200 105) scale(.72)"/>
+<path d="M741 326v-114" stroke="#accabb" stroke-width="4"/><path d="m743 213 48 3-12 25-36-5z" fill="#bedea2"/><ellipse cx="741" cy="333" rx="41" ry="17" fill="none" stroke="#c6ee91" stroke-width="2"/>
+<path d="M0 0h1200v208c-220-30-540-30-1200 50z" fill="#071318" fill-opacity=".3"/>
+<text x="64" y="120" fill="#d9edc4" font-family="Impact,Arial Black,sans-serif" font-size="94" font-weight="900" letter-spacing="-2">PEPEFRONT</text>
+<path d="M68 146h74" stroke="#9fcd76" stroke-width="5"/>
+<path d="M24 24h26M24 24v26m1152-26h-26m26 0v26M24 606h26m-26 0v-26m1152 26h-26m26 0v-26" stroke="#789b7c" stroke-width="2" fill="none"/>
+</svg>

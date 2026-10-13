@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-13T03:45:33.058Z",
+  "readOnly": true,
+  "chainId": 4663,
+  "block": "87208205",
+  "blockTimestamp": "1791863130",
+  "contracts": [
+    {
+      "name": "LaunchToken",
+      "address": "0x7c8f4e0f258a4b2c9e9568d3736e89a06ee17324",
+      "codeBytes": 1784,
+      "runtimeCodeKeccak": "0xc857e307f4fe157243ecff56a07bdba7b48178b1a01428ef2309e87e88cfc532"
+    },
+    {
+      "name": "Game",
+      "address": "0x897098252462810c92c1d8a1b34b77895c1059de",
+      "codeBytes": 15579,
+      "runtimeCodeKeccak": "0x96d3d6d2e00cb390a3b15c825503083929c1e97575d3fff46c304c4f49584eb1"
+    }
+  ],
+  "owner": "0x3d6a89C8751a45DD577a4C1F3b34E71C58236193",
+  "launchToken": "0x7c8f4e0F258a4b2c9e9568d3736E89A06Ee17324",
+  "prizeToken": "0x5F7Bb59365ce557C26dbcAa4EE9d39A4b95B7127",
+  "symbol": "PEPEFRONT",
+  "totalSupply": "1000000000000000000000000000",
+  "epoch": "20739",
+  "epochState": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "transactionsBroadcast": 0,
+  "limitations": [
+    "Nonempty code is not an independent bytecode/source attestation.",
+    "No live wallet signatures, swaps, claims or funded battles were executed."
+  ]
+}

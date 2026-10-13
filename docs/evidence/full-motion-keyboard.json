@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-13T04:16:19.818Z",
+  "mode": "Chromium, full motion; software WebGL renderer",
+  "fixtures": "All wallets and transaction/RPC results in interaction checks are mocked; no live writes.",
+  "results": [
+    {
+      "name": "Keyboard practice: build, harvest, recruit, control groups, pause/resume, victory and replay",
+      "passed": true,
+      "durationMs": 137183
+    }
+  ],
+  "note": "This full-motion keyboard scenario passed. A later touch-input timeout motivated using reduced-motion rendering for the comprehensive suite. This record does not claim that the earlier whole suite passed."
+}

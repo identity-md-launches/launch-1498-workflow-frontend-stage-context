@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-10-13T04:38:56.338Z",
+  "fixtures": "All wallets and transaction/RPC results in interaction checks are mocked; no live writes.",
+  "results": [
+    {
+      "name": "Static export renders at gateway subpath, correct metadata and no overflow at 320/390/768/1440",
+      "passed": true,
+      "durationMs": 2850
+    },
+    {
+      "name": "No-wallet recovery and keyboard-accessible manual closes with Escape",
+      "passed": true,
+      "durationMs": 452
+    },
+    {
+      "name": "Keyboard practice: build, harvest, recruit, control groups, pause/resume, victory and replay",
+      "passed": true,
+      "durationMs": 63286
+    },
+    {
+      "name": "Touch practice, select/move, camera, orders, surrender and all sections reflow at 320",
+      "passed": true,
+      "durationMs": 20640
+    },
+    {
+      "name": "Wallet rejection, unknown-chain add/switch, live state and exact approved chain parameters",
+      "passed": true,
+      "durationMs": 2842
+    },
+    {
+      "name": "Standalone wallet battle encodes start and fresh-turn orders; receipt updates state",
+      "passed": true,
+      "durationMs": 1455
+    },
+    {
+      "name": "Claim rejection leaves entitlement retryable; token/IMD claims and cosmetic approval/purchase succeed",
+      "passed": true,
+      "durationMs": 3918
+    },
+    {
+      "name": "Swap quote, exact ERC20 approval, Permit2 approval, extended router payload and zero ETH",
+      "passed": true,
+      "durationMs": 1744
+    },
+    {
+      "name": "Simulation failure never requests a signature and funding controls use explicit allowances",
+      "passed": true,
+      "durationMs": 2126
+    },
+    {
+      "name": "Opaque sandbox iframe handshake, host wallet state, pause/resume, actions and claims",
+      "passed": true,
+      "durationMs": 12009
+    },
+    {
+      "name": "Reduced motion remains playable and cover reads at 240px",
+      "passed": true,
+      "durationMs": 2384
+    },
+    {
+      "name": "Tampered implementation ABI blocks wallet actions while local play remains available",
+      "passed": true,
+      "durationMs": 3216
+    },
+    {
+      "name": "WebKit mobile primary gameplay, pause and touch order",
+      "passed": true,
+      "durationMs": 5332
+    }
+  ]
+}

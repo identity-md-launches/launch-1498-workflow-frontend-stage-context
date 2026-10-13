@@ -1,0 +1,9 @@
+# Explicit task path budget: web/.gitignore only. Ignore generated files at every depth.
+**/node_modules/
+**/.cache/
+**/.npm/
+**/.vite/
+**/coverage/
+**/test-results/
+**/playwright-report/
+**/*.tsbuildinfo

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "pepe-onchain-game/1",
+  "title": "RH PEPEFRONT",
+  "version": "1.0.0",
+  "summary": "Command Pepe squads through a contested crystal basin.",
+  "description": "An unofficial solo strategy game. Harvest ore, develop your base and win by holding the point or destroying the enemy base. Free local practice is separate from wallet-backed strategic battles and deposited rewards.",
+  "controls": "Click or drag to select; right-click to move; WASD pans; G/B/R/F/H/E issue orders; P pauses. Touch players use Select all, Tap to move and the order buttons. Wallet orders require confirmation.",
+  "genre": "strategy",
+  "players": 1,
+  "mobile": true,
+  "entry": "index.html",
+  "cover": "cover.png",
+  "onchain": {
+    "chainId": 4663,
+    "launchId": "b06c1932-3afd-484d-ba3f-a908ec6ffe21",
+    "creator": "0x3d6a89c8751a45dd577a4c1f3b34e71c58236193",
+    "allocation": "0x6f4f8890a34b509bc226377cf1e37a4972f55769",
+    "trading": "0x8f8bc9d953f0891524fcfa5442b2b2f5c4badfb9",
+    "splitFactory": "0x5cfcece40ceb76f0e99733652fb9dfda1658d4e9",
+    "platform": "0x0a5b0e232d47541eb503bc862a9db2672b8fba24",
+    "game": "0x897098252462810c92c1d8a1b34b77895c1059de",
+    "token": "0x7c8f4e0f258a4b2c9e9568d3736e89a06ee17324",
+    "maxActionValueWei": "0",
+    "maxTokenApproval": "100000000000000000000"
+  }
+}

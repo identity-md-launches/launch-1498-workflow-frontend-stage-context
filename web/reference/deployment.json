@@ -1,0 +1,59 @@
+{
+  "chainId": 4663,
+  "poolKey": {
+    "fee": 12500,
+    "hooks": "0x19bec7c2e1b2aadaf67b259744751a9960d66000",
+    "currency0": "0x5f7bb59365ce557c26dbcaa4ee9d39a4b95b7127",
+    "currency1": "0x7c8f4e0f258a4b2c9e9568d3736e89a06ee17324",
+    "tickSpacing": 60
+  },
+  "repoUrl": "https://github.com/identity-md-launches/launch-1478-workflow-contract-stage-context",
+  "version": 1,
+  "launchId": "b06c1932-3afd-484d-ba3f-a908ec6ffe21",
+  "manifest": {
+    "kind": "evm_project",
+    "pool": {
+      "fee": 12500,
+      "tickSpacing": 60,
+      "initialPrice": "79228162514264337593543950336",
+      "pairedCurrency": "0x5f7bb59365ce557c26dbcaa4ee9d39a4b95b7127"
+    },
+    "notes": "Unofficial RH PEPEFRONT community strategy game. Game implements deterministic single-player battles, command-power accounting, deposit-backed launch-token and IMD rewards, and cosmetics. Its constructor receives the launch owner followed by LaunchToken. Battlefield and CommandPower are internal libraries compiled into Game. No initialization calls are required. The factory supplies the LP, MerkleDistributor and initialization-only pool guard.",
+    "token": {
+      "name": "RH PEPEFRONT",
+      "symbol": "PEPEFRONT",
+      "contract": "LaunchToken",
+      "decimals": 18
+    },
+    "contracts": [
+      {
+        "contract": "Game",
+        "constructorArgs": [
+          "$owner",
+          "$token"
+        ]
+      }
+    ]
+  },
+  "contracts": [
+    {
+      "name": "LaunchToken",
+      "txHash": "0x1097bf6cbd72282d85dc865287b0cc15496bd7d9044f3c9018c84b70d61e74b6",
+      "abiHash": "38880b8e56d42ce900f744a7908c7139632a49f1c3f33385c64ceaed29d37bee",
+      "address": "0x7c8f4e0f258a4b2c9e9568d3736e89a06ee17324",
+      "blockNumber": 87010818,
+      "creationCodeHash": "d093f7f02506417aecc4082a2d0b60db274a2f737487bcccddf029e647301fce"
+    },
+    {
+      "name": "Game",
+      "txHash": "0x1097bf6cbd72282d85dc865287b0cc15496bd7d9044f3c9018c84b70d61e74b6",
+      "abiHash": "b185c9df8c709ab045e0eb209f014a7a9cff37bb17e965c07d72566eb0e40c4c",
+      "address": "0x897098252462810c92c1d8a1b34b77895c1059de",
+      "blockNumber": 87010818,
+      "creationCodeHash": "33c2b49af98c001f38cff0a85f0af9941ce28e7ae6a761075624a01fd6e0322d"
+    }
+  ],
+  "sourceCommit": "28cdf3268e872d58954f905687d8aaf9b635168a",
+  "abiInstructions": "Build ABIs from this exact source commit; compare canonicalKeccak(abi) with abiHash. Verify deployed code on the stated chain before enabling transactions.",
+  "attestationHash": "f8bb60a5b4fd384209e9d60cb17d4a47f38e6fb793fcb0af6674fe280e8d413b"
+}
