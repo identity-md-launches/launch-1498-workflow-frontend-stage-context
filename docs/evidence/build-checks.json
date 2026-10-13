@@ -1,26 +1,35 @@
 {
-  "checkedAt": "2026-10-13T04:41:08.633040+00:00",
-  "typecheck": "tsc --noEmit passed",
-  "build": "Vite production build passed, 435 modules, 15 inventory assets; final rebuild byte-identical to browser-tested export",
+  "checkedAt": "2026-10-13T06:05:21.096960+00:00",
+  "typecheck": "tsc --noEmit passed as part of the final production build",
+  "build": "Vite production build passed, 436 modules; full browser suite and pinned design probe ran against this final export",
   "unitTests": {
-    "passed": 9,
+    "passed": 12,
     "failed": 0,
-    "file": "web/tests/rules.test.ts"
+    "files": [
+      "web/tests/rules.test.ts",
+      "web/tests/pathing.test.ts"
+    ]
   },
   "manifestVerification": {
     "pass": true,
     "contracts": 2,
     "assets": 15,
-    "exportBytes": 1314705,
+    "exportBytes": 1319246,
     "abiHashes": "canonical Keccak verified",
     "assetHashes": "SHA-256 verified",
     "poolKey": "exact",
     "network": "exact"
   },
+  "deploymentManifestSha256": "6739ab0f13a4c3d7e5f13827843252a6a4af4187079fb247fb4c8f74e6056c8c",
   "browserScenarios": {
-    "passed": 13,
+    "passed": 18,
     "failed": 0,
-    "details": "browser-results.json"
+    "details": "browser-results.json",
+    "revisionDetails": "revision-results.json",
+    "engines": [
+      "Chromium",
+      "WebKit"
+    ]
   },
   "designProbe": {
     "passed": 16,

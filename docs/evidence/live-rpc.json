@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-10-13T03:45:33.058Z",
+  "checkedAt": "2026-10-13T05:29:25.773Z",
   "readOnly": true,
   "chainId": 4663,
-  "block": "87208205",
-  "blockTimestamp": "1791863130",
+  "block": "87268103",
+  "blockTimestamp": "1791869364",
   "contracts": [
     {
       "name": "LaunchToken",

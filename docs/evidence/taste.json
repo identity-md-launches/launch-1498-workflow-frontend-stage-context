@@ -4,7 +4,7 @@
    "name": "render",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 29005,
+   "durationMs": 30221,
    "output": "renders, no script errors or missing local files\nexternal hosts: robinhood-rpc.publicnode.com"
   },
   {
@@ -25,7 +25,7 @@
    "name": "contrast",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 0,
    "output": "all measured text meets 4.5:1 (3:1 large)\n13 text boxes over images, video, canvas or gradients not measured"
   },
   {
@@ -46,14 +46,14 @@
    "name": "eyebrows",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 0,
+   "durationMs": 1,
    "output": "no kicker labels above headings"
   },
   {
    "name": "type-sizes",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 0,
    "output": "390: 4 sizes in use, 5 with one-offs (13px×29, 15px×11, 16px×2, 20px×8, 32px×1)\n1440: 5 sizes in use, 6 with one-offs (13px×25, 15px×16, 16px×3, 20px×6, 32px×2, 48px×1)\nbar: 6 sizes used more than once, 8 counting one-offs, per width"
   },
   {
@@ -81,7 +81,7 @@
    "name": "repetition",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 2,
    "output": "no repeated lines"
   },
   {
@@ -114,7 +114,7 @@
   }
  ],
  "target": "dist",
- "at": "2026-10-13T04:40:35.924Z",
+ "at": "2026-10-13T06:04:12.416Z",
  "bar": {
   "sizes": 6,
   "strays": 8,
@@ -602,7 +602,7 @@
  },
  "texts390": [
   {
-   "sel": "header.header > a.brand > div > h1",
+   "sel": "header.header > a.brand > div > h1.stencil",
    "text": "PEPEFRONT",
    "words": 1,
    "tag": "h1",
@@ -784,7 +784,7 @@
    "digits": 0
   },
   {
-   "sel": "#main > div.battle-heading:nth-of-type(1) > div:nth-of-type(1) > h2",
+   "sel": "#main > div.battle-heading:nth-of-type(1) > div:nth-of-type(1) > h2.stencil",
    "text": "Take the crystal front.",
    "words": 4,
    "tag": "h2",
@@ -1304,7 +1304,7 @@
    "digits": 0.08695652173913043
   },
   {
-   "sel": "aside.command-panel > div.briefing:nth-of-type(2) > div.briefing-title > h3",
+   "sel": "aside.command-panel > div.briefing:nth-of-type(2) > div.briefing-title > h3.stencil",
    "text": "Mission briefing",
    "words": 2,
    "tag": "h3",
@@ -1930,7 +1930,7 @@
  ],
  "texts1440": [
   {
-   "sel": "header.header > a.brand > div > h1",
+   "sel": "header.header > a.brand > div > h1.stencil",
    "text": "PEPEFRONT",
    "words": 1,
    "tag": "h1",
@@ -2138,7 +2138,7 @@
    "digits": 0
   },
   {
-   "sel": "#main > div.battle-heading:nth-of-type(1) > div:nth-of-type(1) > h2",
+   "sel": "#main > div.battle-heading:nth-of-type(1) > div:nth-of-type(1) > h2.stencil",
    "text": "Take the crystal front.",
    "words": 4,
    "tag": "h2",
@@ -2684,7 +2684,7 @@
    "digits": 0.08695652173913043
   },
   {
-   "sel": "aside.command-panel > div.briefing:nth-of-type(2) > div.briefing-title > h3",
+   "sel": "aside.command-panel > div.briefing:nth-of-type(2) > div.briefing-title > h3.stencil",
    "text": "Mission briefing",
    "words": 2,
    "tag": "h3",

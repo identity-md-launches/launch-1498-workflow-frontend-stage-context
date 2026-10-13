@@ -4,6 +4,7 @@ import { resolve, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { chromium, webkit } from "playwright";
+import { revisionChecks } from "./revision.mjs";
 import {
   decodeFunctionData,
   decodeAbiParameters,
@@ -442,6 +443,8 @@ const results = [];
 let browser;
 let debugPage;
 async function check(name, run) {
+  if (process.env.PEPEFRONT_TEST_GROUP === 'revision' && !name.startsWith('Revision:')) return;
+  if (process.env.PEPEFRONT_TEST_MATCH && !new RegExp(process.env.PEPEFRONT_TEST_MATCH).test(name)) return;
   if (process.env.PEPEFRONT_TEST_GROUP === 'wallet' && /^(Static export|No-wallet|Keyboard practice|Touch practice)/.test(name)) return;
   const started = Date.now();
   try {
@@ -456,7 +459,7 @@ async function check(name, run) {
       error: error.stack,
     });
     console.error("FAIL " + name + " " + error.message);
-    if (debugPage)
+    if (debugPage && !debugPage.isClosed())
       console.error(
         (await debugPage.locator("body").innerText()).slice(0, 5000),
       );
@@ -554,6 +557,10 @@ async function injected(context, state) {
         accounts = [];
         for (const f of listeners.accountsChanged || []) f([]);
       };
+      window.testChain = (id) => {
+        chain = id;
+        for (const f of listeners.chainChanged || []) f(chain);
+      };
     },
     { wallet, chainId: config.chainId },
   );
@@ -578,7 +585,7 @@ async function ready(page, label) {
 }
 async function loaded(page) {
   debugPage = page;
-  page.setDefaultTimeout(15000);
+  page.setDefaultTimeout(Number(process.env.PEPEFRONT_BROWSER_TIMEOUT || 15000));
   await page.goto(origin + "/preview/");
   try {
     await page
@@ -1020,6 +1027,7 @@ try {
       await context.close();
     },
   );
+  await revisionChecks({ browser, fixture, rpcMock, injected, loaded, ready, button, confirm, check, config, token, uni, out, origin });
   await browser.close();
   browser = undefined;
   try {

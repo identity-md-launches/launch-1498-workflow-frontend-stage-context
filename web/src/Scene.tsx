@@ -7,6 +7,7 @@ import {
 } from "react";
 import * as THREE from "three";
 import type { Battle } from "./rules";
+import { createNavigator, type Footprint } from "./pathing";
 
 export type SceneHandle = {
   selectAll: () => void;
@@ -28,6 +29,8 @@ type Unit = {
   mesh: THREE.Group;
   ring: THREE.Mesh;
   target: THREE.Vector3[];
+  route: THREE.Vector3[];
+  returning: boolean;
   selected: boolean;
   enemy: boolean;
 };
@@ -223,6 +226,11 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
     ground.position.y = -0.02;
     ground.receiveShadow = true;
     scene.add(ground);
+    const solids: THREE.Object3D[] = [];
+    const footprint = (object: THREE.Object3D): Footprint => {
+      const bounds = new THREE.Box3().setFromObject(object);
+      return { minX: bounds.min.x, maxX: bounds.max.x, minZ: bounds.min.z, maxZ: bounds.max.z };
+    };
     // Original miniature terrain, geometry only: no remote textures or models.
     let seed = 14578;
     const random = () => {
@@ -263,6 +271,7 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
         rock.scale.set(1, 0.7 + random(), 1);
         rock.castShadow = true;
         scene.add(rock);
+        solids.push(rock);
       }
     }
     const friendly = building(1, false);
@@ -272,6 +281,7 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
     enemy.position.set(15, 0, -9);
     enemy.rotation.y = Math.PI;
     scene.add(enemy);
+    solids.push(friendly, enemy);
     const infrastructure: THREE.Group[] = [];
     for (let i = 1; i <= 4; i++) {
       const g = new THREE.Group();
@@ -334,10 +344,16 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
     }
     for (let i = 0; i < 8; i++) {
       const x = -7 + i * 2;
-      scene.add(box(1.3, 0.65, 0.9, 0x596354, x, 0.32, -14));
+      const barricade = box(1.3, 0.65, 0.9, 0x596354, x, 0.32, -14);
+      scene.add(barricade);
+      solids.push(barricade);
     }
+    const terrain = solids.map(footprint);
+    let navigation = createNavigator(terrain);
+    let lastTech = -1;
     const units: Unit[] = [];
     let lastArmy = "";
+    let lastBattle = "";
     let nextID = 0;
     function addUnit(rank: number, enemyUnit: boolean, index: number) {
       const mesh = pepe(rank, enemyUnit);
@@ -349,6 +365,8 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
           ? -5 - Math.floor(index / 3) * 2
           : 9 + Math.floor(index / 4) * 2,
       );
+      const spawn = navigation.project(mesh.position);
+      mesh.position.set(spawn.x, 0, spawn.z);
       mesh.rotation.y = enemyUnit ? -1 : 1;
       const ring = new THREE.Mesh(
         new THREE.RingGeometry(0.83, 0.9, 32),
@@ -368,6 +386,8 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
         mesh,
         ring,
         target: [],
+        route: [],
+        returning: false,
         selected: false,
         enemy: enemyUnit,
       });
@@ -449,9 +469,9 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
         const p = point
           .clone()
           .add(new THREE.Vector3((i % 3) * 1.8, 0, Math.floor(i / 3) * 1.8));
-        p.x = THREE.MathUtils.clamp(p.x, -24, 24);
-        p.z = THREE.MathUtils.clamp(p.z, -18, 18);
-        if (!queue) u.target = [];
+        const destination = navigation.project(p);
+        p.set(destination.x, 0, destination.z);
+        if (!queue) { u.target = []; u.route = []; }
         if (u.target.length < 8) u.target.push(p);
       });
     };
@@ -611,43 +631,68 @@ export const Scene = forwardRef<SceneHandle, Props>(function Scene(props, ref) {
         lastStatus = b.status;
       }
       const counts = b ? [b.recruits, b.tanks, b.commandos] : [3, 1, 1];
-      const signature = counts.join(",") + String(b?.id ?? "preview");
+      const tech = b ? b.tech : 2;
+      if (tech !== lastTech) {
+        navigation = createNavigator([...terrain, ...infrastructure.slice(0, tech).map(footprint)]);
+        for (const u of units) {
+          const p = navigation.project(u.mesh.position);
+          u.mesh.position.set(p.x, 0, p.z);
+          u.route = []; // Reroute queued destinations if new construction blocks them.
+        }
+        lastTech = tech;
+      }
+      const battleID = b ? `${b.id}:${b.startedAt}:${b.faction}:${b.difficulty}` : "preview";
+      const signature = counts.join(",") + ":" + battleID;
       if (signature !== lastArmy) {
+        const newBattle = battleID !== lastBattle;
         for (let i = units.length - 1; i >= 0; i--)
-          if (!units[i].enemy) {
+          if (!units[i].enemy && newBattle) {
             scene.remove(units[i].mesh);
             dispose(units[i].mesh);
             units.splice(i, 1);
           }
-        let index = 0;
-        counts.forEach((n, rank) => {
-          for (let i = 0; i < n; i++) addUnit(rank, false, index++);
+        if (newBattle) groups.clear();
+        [...counts, 1, 1].forEach((n, rank) => {
+          const existing = units.filter(u => !u.enemy && u.rank === rank);
+          for (const u of existing.slice(n)) {
+            scene.remove(u.mesh);
+            dispose(u.mesh);
+            units.splice(units.indexOf(u), 1);
+          }
+          for (let i = existing.length; i < n; i++)
+            addUnit(rank, false, units.filter(u => !u.enemy).length);
         });
-        addUnit(3, false, index++);
-        addUnit(4, false, index);
+        lastBattle = battleID;
         lastArmy = signature;
-        select([]);
+        select(units.filter(u => u.selected));
         dirty = true;
       }
       infrastructure.forEach((g, i) => (g.visible = b ? b.tech > i : i < 2));
       enemy.scale.y = b?.enemyHP === 0 ? 0.18 : 1;
       if (!data.current.paused && !document.hidden) {
         for (const u of units) {
+          if (!u.target.length && u.rank === 3 && !reduced) {
+            // Auto-return harvesters use the same collision-aware routes as orders.
+            u.target.push(new THREE.Vector3(u.returning ? -11 : -2, 0, u.returning ? 11 : 7));
+            u.returning = !u.returning;
+          }
           if (u.target[0]) {
-            const p = u.target[0],
-              delta = p.clone().sub(u.mesh.position);
-            if (delta.length() < 0.15) u.target.shift();
-            else {
+            if (!u.route.length)
+              u.route = navigation.route(u.mesh.position, u.target[0]).map(p => new THREE.Vector3(p.x, 0, p.z));
+            const p = u.route[0];
+            if (!p) { u.target.shift(); continue; }
+            const delta = p.clone().sub(u.mesh.position);
+            delta.y = 0;
+            const step = dt * (u.rank === 1 ? 3 : 4);
+            if (delta.length() <= step) {
+              u.mesh.position.set(p.x, 0, p.z);
+              u.route.shift();
+              if (!u.route.length) u.target.shift();
+            } else {
               u.mesh.rotation.y = Math.atan2(delta.x, delta.z);
-              u.mesh.position.add(
-                delta.normalize().multiplyScalar(dt * (u.rank === 1 ? 3 : 4)),
-              );
+              u.mesh.position.add(delta.normalize().multiplyScalar(step));
             }
-          } else if (u.rank === 3 && !reduced) {
-            const t = time * 0.00035;
-            u.mesh.position.x = -8 + Math.sin(t) * 7;
-            u.mesh.position.z = 7 + Math.cos(t) * 2;
-            u.mesh.rotation.y = Math.cos(t) > 0 ? 1.5 : -1.5;
+            dirty = true;
           }
           u.mesh.position.y =
             reduced || u.rank === 1 ? 0 : Math.sin(time * 0.003 + u.id) * 0.04;

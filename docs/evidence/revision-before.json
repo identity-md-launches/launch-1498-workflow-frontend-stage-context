@@ -1,0 +1,66 @@
+{
+  "victory": {
+    "sceneHeight": 300,
+    "cardHeight": 334.046875,
+    "actionTop": 289.046875,
+    "actionBottom": 333.046875,
+    "actionHeight": 44,
+    "centerHitsButton": false
+  },
+  "surrender": {
+    "sceneHeight": 300,
+    "cardHeight": 314.546875,
+    "actionTop": 269.546875,
+    "actionBottom": 313.546875,
+    "actionHeight": 44,
+    "centerHitsButton": true
+  },
+  "retry": {
+    "manifestRequests": 1,
+    "verified": 0,
+    "error": [
+      "Deployment configuration could not load. Reload the site.Retry checks"
+    ]
+  },
+  "portrait": {
+    "filters": 0,
+    "background": "none",
+    "font": "\"Barlow Condensed\", \"Arial Narrow\", sans-serif",
+    "observed": "Flat vector fills without grain or scanlines; inspected initial briefing screenshot."
+  },
+  "recruitment": [
+    "No Pepes selected"
+  ],
+  "movement": {
+    "canvas": {
+      "x": 41,
+      "y": 305.375,
+      "width": 1042,
+      "height": 500
+    },
+    "click": {
+      "x": 359.86,
+      "y": 225.78
+    },
+    "observed": "Both support Pepes entered/intersected the friendly headquarters; inspected the saved canvas screenshot."
+  },
+  "quote": {
+    "display": [
+      "Estimated receive2 IMDMinimum 1.99 IMDQuote expires in 30s"
+    ],
+    "action": "1. Approve PEPEFRONT",
+    "confirmation": "Approve IMD\n\nAllow Permit2 to spend exactly 1 IMD. This is step 1 of 3; no swap happens yet.\n\nCancel\nApprove IMD",
+    "sent": [
+      {
+        "to": "0x7c8f4e0f258a4b2c9e9568d3736e89a06ee17324",
+        "fn": "approve",
+        "args": [
+          "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+          "1000000000000000000"
+        ]
+      }
+    ]
+  },
+  "acceptedCommit": "86e11716feb0d540771c1eef23eed66f652adf4b",
+  "description": "Browser reproductions against the unchanged accepted dist export, before any production rebuild. Wallet and RPC responses mocked; no real writes."
+}

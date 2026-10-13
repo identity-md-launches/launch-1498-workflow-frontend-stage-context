@@ -42,6 +42,10 @@ Before enabling writes the app checks RPC chain ID, nonempty Game/LaunchToken co
 
 A wallet change invalidates current state and open transaction confirmations. Unknown-chain errors trigger the exact supplied `wallet_addEthereumChain` parameters and then a second switch. Requests stay locked through receipts. Any transport failure after a returned transaction hash is treated as uncertain and requires a receipt check; it is never resent automatically. Confirmed reverts and rejected signatures remain retryable after review.
 
+Quotes also bind the account, chain, direction, amount, slippage and asset decimals to one request snapshot. Changed inputs invalidate pending results, and both approval steps and the swap use that snapshot's token and amount. If initial deployment/ABI loading fails, **Retry checks** reloads the site; an initialized service keeps its existing verification retry.
+
+Recruitment appends only the new rank count, preserving existing selections, number groups and queued movement until a new battle. Movement and auto-return harvesters route around buildings, rocks and barricades; terrain-blocked destinations move to the perimeter. Wallet result cards expand to contain both actions on narrow screens.
+
 ## Pepe2Pepe embedding
 
 The unmodified MIT-licensed `src/onchain-bridge.js` is bundled locally from the template's SDK. It receives the `pepe-game/1` init/channel handshake and accepts host messages only from `window.parent` with the current channel. A handshake change rejects old pending requests. It supports host pause/resume and preview mode; preview disables writes.
@@ -67,6 +71,8 @@ node web/scripts/live-check.mjs
 ```
 
 Browser tests manage and stop their own preview server, serve the production export under `/preview/`, mock wallet/RPC writes, and write actual screenshots plus JSON outcomes to `docs/evidence/`. The live check is read-only. Never use a funded wallet merely to validate this frontend. See [validation](../docs/VALIDATION.md), [design system](../docs/DESIGN.md) and [feature coverage](../docs/FRONTEND-COVERAGE.md).
+
+The revision regressions in `tests/revision.mjs` reuse the original mock fixture and are included in `test:browser`. Set `PEPEFRONT_TEST_GROUP=revision` to run only those cases. They inspect actual rendered unit positions using Three.js's existing devtools observation API, with no production test hook. The collision tests additionally sample complete route segments independently of the planner. See [revision evidence](../docs/REVISION.md) for the six reproduced reports and fixes.
 
 The optional `web/scripts/render-cover.mjs` renders the authored vector cover to the committed 1200×630 PNG using Chromium. Normal builds copy that PNG and do not require a browser. All three local fonts ship as WOFF2 only.
 

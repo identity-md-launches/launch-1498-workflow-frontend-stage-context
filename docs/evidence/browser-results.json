@@ -1,71 +1,96 @@
 {
-  "checkedAt": "2026-10-13T04:38:56.338Z",
+  "checkedAt": "2026-10-13T05:59:37.958Z",
   "fixtures": "All wallets and transaction/RPC results in interaction checks are mocked; no live writes.",
   "results": [
     {
       "name": "Static export renders at gateway subpath, correct metadata and no overflow at 320/390/768/1440",
       "passed": true,
-      "durationMs": 2850
+      "durationMs": 12446
     },
     {
       "name": "No-wallet recovery and keyboard-accessible manual closes with Escape",
       "passed": true,
-      "durationMs": 452
+      "durationMs": 711
     },
     {
       "name": "Keyboard practice: build, harvest, recruit, control groups, pause/resume, victory and replay",
       "passed": true,
-      "durationMs": 63286
+      "durationMs": 67008
     },
     {
       "name": "Touch practice, select/move, camera, orders, surrender and all sections reflow at 320",
       "passed": true,
-      "durationMs": 20640
+      "durationMs": 84307
     },
     {
       "name": "Wallet rejection, unknown-chain add/switch, live state and exact approved chain parameters",
       "passed": true,
-      "durationMs": 2842
+      "durationMs": 6228
     },
     {
       "name": "Standalone wallet battle encodes start and fresh-turn orders; receipt updates state",
       "passed": true,
-      "durationMs": 1455
+      "durationMs": 8639
     },
     {
       "name": "Claim rejection leaves entitlement retryable; token/IMD claims and cosmetic approval/purchase succeed",
       "passed": true,
-      "durationMs": 3918
+      "durationMs": 6671
     },
     {
       "name": "Swap quote, exact ERC20 approval, Permit2 approval, extended router payload and zero ETH",
       "passed": true,
-      "durationMs": 1744
+      "durationMs": 6354
     },
     {
       "name": "Simulation failure never requests a signature and funding controls use explicit allowances",
       "passed": true,
-      "durationMs": 2126
+      "durationMs": 6388
     },
     {
       "name": "Opaque sandbox iframe handshake, host wallet state, pause/resume, actions and claims",
       "passed": true,
-      "durationMs": 12009
+      "durationMs": 15937
     },
     {
       "name": "Reduced motion remains playable and cover reads at 240px",
       "passed": true,
-      "durationMs": 2384
+      "durationMs": 11489
     },
     {
       "name": "Tampered implementation ABI blocks wallet actions while local play remains available",
       "passed": true,
-      "durationMs": 3216
+      "durationMs": 11133
+    },
+    {
+      "name": "Revision: wallet victory and surrender keep both result actions visible at 320 and 390",
+      "passed": true,
+      "durationMs": 50462
+    },
+    {
+      "name": "Revision: Retry checks recovers a transient manifest or ABI failure",
+      "passed": true,
+      "durationMs": 20926
+    },
+    {
+      "name": "Revision: recruiting preserves number groups and active orders until a new battle",
+      "passed": true,
+      "durationMs": 34532
+    },
+    {
+      "name": "Revision: base destinations stay outside scenery and briefings retain static texture",
+      "passed": true,
+      "durationMs": 24804
+    },
+    {
+      "name": "Revision: stale quotes cannot outlive form, account, chain or page changes",
+      "passed": true,
+      "durationMs": 10434
     },
     {
       "name": "WebKit mobile primary gameplay, pause and touch order",
       "passed": true,
-      "durationMs": 5332
+      "durationMs": 11735
     }
   ]
 }

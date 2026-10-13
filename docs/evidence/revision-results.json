@@ -1,0 +1,115 @@
+{
+  "checkedAt": "2026-10-13T05:57:03.771Z",
+  "mockedWritesOnly": true,
+  "victory": [
+    {
+      "width": 320,
+      "sceneHeight": 366.046875,
+      "cardHeight": 334.046875,
+      "cardInside": true,
+      "overflow": false,
+      "actions": [
+        {
+          "label": "Play again",
+          "height": 44,
+          "inside": true,
+          "hittable": true
+        },
+        {
+          "label": "View rewards",
+          "height": 44,
+          "inside": true,
+          "hittable": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "sceneHeight": 300,
+      "cardHeight": 262.546875,
+      "cardInside": true,
+      "overflow": false,
+      "actions": [
+        {
+          "label": "Play again",
+          "height": 44,
+          "inside": true,
+          "hittable": true
+        },
+        {
+          "label": "View rewards",
+          "height": 44,
+          "inside": true,
+          "hittable": true
+        }
+      ]
+    }
+  ],
+  "surrender": {
+    "width": 320,
+    "sceneHeight": 346.546875,
+    "cardHeight": 314.546875,
+    "cardInside": true,
+    "overflow": false,
+    "actions": [
+      {
+        "label": "Play again",
+        "height": 44,
+        "inside": true,
+        "hittable": true
+      },
+      {
+        "label": "View rewards",
+        "height": 44,
+        "inside": true,
+        "hittable": true
+      }
+    ]
+  },
+  "retry": [
+    {
+      "asset": "imd-deployment.json",
+      "requests": 2,
+      "verified": true
+    },
+    {
+      "asset": "abi/Game.json",
+      "requests": 2,
+      "verified": true
+    }
+  ],
+  "recruitment": {
+    "savedGroupAfterRecruit": 3,
+    "totalAfterRecruit": 4,
+    "originalMeshIdentitiesPreserved": true,
+    "noTeleport": true,
+    "queuedDestinationReached": true,
+    "groupClearedOnNewBattle": true
+  },
+  "portrait": {
+    "grain": true,
+    "scanlines": true,
+    "stencil": "repeating-linear-gradient(to right, rgb(0, 0, 0) 0px, rgb(0, 0, 0) 7.2px, rgba(0, 0, 0, 0) 7.2px, rgba(0, 0, 0, 0) 7.68px, rgb(0, 0, 0) 7.68px, rgb(0, 0, 0) 14.4px)"
+  },
+  "pathing": {
+    "observedFrames": 59,
+    "solidsMeasured": 30,
+    "bodyClearance": 1.39,
+    "collisions": 0,
+    "headquartersOrderCompleted": true,
+    "method": "Read-only Three.js devtools scene observation; sampled rendered positions against actual mesh bounds. Independent route tests also sample every segment."
+  },
+  "quoteRaces": [
+    "buy-to-sell response discarded",
+    "older response cannot overwrite a newer quote",
+    "slippage invalidates pending quote",
+    "same-key invalidates pending quote",
+    "account invalidates pending quote",
+    "chain invalidates pending quote",
+    "unmount invalidates pending quote"
+  ],
+  "correctApproval": {
+    "token": "0x7c8f4e0f258a4b2c9e9568d3736e89a06ee17324",
+    "amount": "100000000000000000000"
+  }
+}

@@ -132,6 +132,15 @@ h2 {
 h3 {
   font-size: var(--medium);
 }
+.stencil {
+  /* A narrow static cut in display lettering; body copy and controls stay solid. */
+  mask-image: repeating-linear-gradient(
+    to right, #000 0 0.45em, transparent 0.45em 0.48em, #000 0.48em 0.9em
+  );
+}
+@media (forced-colors: active), (prefers-contrast: more) {
+  .stencil { mask-image: none; }
+}
 strong,
 b {
   font-weight: 600;
@@ -380,6 +389,14 @@ main {
   height: 500px;
   isolation: isolate;
   background: #102126;
+}
+.scene-wrap:has(.results-overlay) {
+  height: auto;
+  min-height: 300px;
+}
+.scene-wrap .results-overlay {
+  position: relative;
+  min-height: 300px;
 }
 .scene {
   position: absolute;

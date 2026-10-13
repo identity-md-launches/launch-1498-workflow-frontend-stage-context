@@ -404,7 +404,7 @@ export default function App() {
           >
             <img src="./favicon.svg" width="38" height="38" alt="" />
             <div>
-              <h1>PEPEFRONT</h1>
+              <h1 className="stencil">PEPEFRONT</h1>
               <span>RH · Unofficial community RTS</span>
             </div>
           </a>
@@ -495,7 +495,7 @@ export default function App() {
             <>
               <div className="battle-heading">
                 <div>
-                  <h2>
+                  <h2 className="stencil">
                     {active
                       ? "Hold the crystal front."
                       : "Take the crystal front."}
@@ -967,7 +967,7 @@ export default function App() {
                       <div className="commander">
                         <PepePortrait cult={battle!.faction === 1} />
                         <div>
-                          <h3>
+                          <h3 className="stencil">
                             {battle!.faction === 0 ? "Initiative" : "Cult"}{" "}
                             command
                           </h3>
@@ -1011,7 +1011,7 @@ export default function App() {
                   <div className="briefing">
                     <div className="briefing-title">
                       <Icon name="flag" />
-                      <h3>Mission briefing</h3>
+                      <h3 className="stencil">Mission briefing</h3>
                     </div>
                     <p>
                       Crystal Basin is the last supply line. Establish your base

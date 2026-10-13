@@ -285,7 +285,10 @@ export function useChain(onPause: () => void, onResume: () => void) {
     }
   }
   async function verify() {
-    if (!service) return;
+    if (!service) {
+      window.location.reload();
+      return;
+    }
     setError("");
     setLoading(true);
     try {

@@ -1,15 +1,17 @@
 {
-  "checkedAt": "2026-10-13T04:40:36.185002+00:00",
-  "newFiles": 71,
-  "newFileBytes": 3165991,
-  "candidateWorkingTreeBlobBytes": 4279556,
-  "existingGitDirectoryBytes": 195653,
-  "conservativeBytesIncludingOneMiBPackagingAllowance": 5523785,
+  "checkedAt": "2026-10-13T06:06:07.800770+00:00",
+  "acceptedFrontendCommit": "86e11716feb0d540771c1eef23eed66f652adf4b",
+  "changedPathsIncludingResponse": 41,
+  "candidateWorkingTreeFiles": 157,
+  "candidateWorkingTreeBlobBytes": 4600574,
+  "measuredFullHistoryCandidateBundleBytes": 3499425,
+  "reservedFinalReportAndPublisherMetadataBytes": 65536,
+  "candidateBundlePlusReserveBytes": 3564961,
   "budgetBytes": 8388608,
-  "scope": "Only web/, dist/ and new docs/ files; no tracked preexisting file changed",
+  "scope": "Only web/, dist/, docs/ and the explicitly requested .imd-responses.json. Contract sources, deployed ABI exports, root configuration, package manifests/lockfiles and ignore files are unchanged.",
   "generatedDependenciesInCandidateFiles": false,
   "submodules": false,
-  "commitBundle": "Not emitted: .git is read-only. Sizes above are working-tree plus existing Git storage measurements, not an actual pack measurement.",
-  "finalDeploymentManifestSha256": "cd3d9ee7c92645dca537aa483a31a967816d00c51744fb2c2b6262501d7e3ea3",
-  "note": "This report excludes its own bytes; the 1 MiB packaging allowance covers this report and remaining validation text."
+  "bundleMethod": "Copied the candidate delta into an isolated test/scratch clone of the accepted repository, made a temporary validation commit there, created a Git bundle with --all and verified it. Includes complete available history and required source/export/evidence. Main .git was not modified.",
+  "finalDeploymentManifestSha256": "6739ab0f13a4c3d7e5f13827843252a6a4af4187079fb247fb4c8f74e6056c8c",
+  "note": "This measurement includes the previous version of this small report. The 64 KiB reserve covers this report finalization and publisher commit metadata. The bundle is checked again after finalizing this report and stays in disposable scratch only."
 }

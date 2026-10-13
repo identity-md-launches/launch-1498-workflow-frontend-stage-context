@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import type { ReactNode } from "react";
 import { getAddress, type Address } from "viem";
 import type { Runtime } from "./config";
@@ -117,8 +117,18 @@ export function Icon({ name, size = 20 }: { name: string; size?: number }) {
   );
 }
 export function PepePortrait({ cult = false }: { cult?: boolean }) {
+  const id = useId();
   return (
     <svg viewBox="0 0 160 140" aria-hidden="true" className="pepe-portrait">
+      <defs>
+        <filter id={`${id}-grain`} x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <pattern id={`${id}-scanlines`} width="160" height="4" patternUnits="userSpaceOnUse">
+          <path d="M0 0h160v1H0z" fill="#071214" />
+        </pattern>
+      </defs>
       <path fill={cult ? "#382332" : "#173e3e"} d="M0 0h160v140H0z" />
       <path
         fill={cult ? "#694952" : "#496257"}
@@ -138,6 +148,10 @@ export function PepePortrait({ cult = false }: { cult?: boolean }) {
         strokeWidth="5"
       />
       <path fill={cult ? "#f08cab" : "#58e3d6"} d="m112 111 7 3-6 10-7-4z" />
+      <g pointerEvents="none">
+        <path d="M0 0h160v140H0z" filter={`url(#${id}-grain)`} opacity="0.18" style={{ mixBlendMode: "soft-light" }} />
+        <path d="M0 0h160v140H0z" fill={`url(#${id}-scanlines)`} opacity="0.3" />
+      </g>
     </svg>
   );
 }

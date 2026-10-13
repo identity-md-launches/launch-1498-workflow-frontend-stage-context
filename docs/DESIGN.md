@@ -35,6 +35,8 @@ Two locally bundled WOFF2 families: Barlow for text (400 and 600), Barlow Conden
 
 The six CSS sizes are `--small` 13px, `--body` 15px, `--base` 16px, `--medium` 20px, `--large` 32px, and `--display` 48px at the 16px root size. The main heading uses 48px on wide screens and 32px at narrow widths. Inputs remain 16px to avoid mobile focus zoom. Body line-height is 1.5; heading line-height is 1.08. Main headings use -0.015em tracking; the logo uses +0.02em. Heading text balances, prose uses `text-wrap: pretty`, and long-form text has a 72ch maximum. Numeric displays use tabular numerals. Contract addresses and large values wrap instead of silently clipping.
 
+The `.stencil` treatment adds static vertical cuts, 0.03em wide every 0.9em, to the existing brand, battlefield and briefing/commander headings. It preserves their text, font, weight and layout. Body text and controls have no mask. Increased-contrast and forced-colors preferences remove the cuts.
+
 ## Layout
 
 `styles.css` defines the shared primitives. Desktop maximum width is 1600px with 40px side padding. Below 1180px the padding is 24px; below 650px it is 16px, and below 360px 12px. The main scene grid is `minmax(0, 1fr) 292px` with a 24px gap. The command column narrows at 1180px and moves below the scene at 900px. Mobile faction cards share two columns; order controls use two columns. Operational panels collapse to one column at 650px.
@@ -43,9 +45,11 @@ The common spacing steps are 4, 8, 12, 16, 20, 24 and 32px. Related controls use
 
 The scene height is 500px on typical desktop, 560px above 1500px, 470px below 1180px, 460px below 900px, 320px below 650px and 300px below 360px. At 390×844, the product, connect control and complete Play action were visible in the first screen. Reflow was also checked at 320, 768 and 1440px. The site does not use fixed headers or fixed bottom wallet overlays.
 
+Results are content-sized at every breakpoint: `.scene-wrap:has(.results-overlay)` uses automatic height, and the result overlay participates in normal flow with a 300px minimum. Its text and wrapped action row determine the surface height; both wallet result actions remain inside the surface at 320px.
+
 ## Elevation & depth
 
-Borders establish structure. The battlefield has a low-radius frame, panels have flat tonal backgrounds, and the primary action is the strongest color. Only the native transaction/help dialogs and scene pause/result overlays use substantial shadows. The scene's caption uses a text shadow; its top controls have a darker local surface. A scanline-style military character is conveyed by the condensed heading face, clipped-looking geometry, rank pips and muted field colors without an animated full-page scanline effect.
+Borders establish structure. The battlefield has a low-radius frame, panels have flat tonal backgrounds, and the primary action is the strongest color. Only the native transaction/help dialogs and scene pause/result overlays use substantial shadows. The scene's caption uses a text shadow; its top controls have a darker local surface. `PepePortrait` retains the existing vector art, with static seeded SVG grain (18% soft-light) and a 4-unit scanline pattern (30% opacity) contained within each portrait. These decorative layers do not intercept input or cover adjacent text. There is no animated full-page scanline effect.
 
 Native dialogs use the top layer and an opaque dark backdrop with a small blur. Scene pause/result overlays have local z-index 4; the scene minimap has local z-index 1. Decorative scene layers do not intercept controls.
 
@@ -58,7 +62,7 @@ Buttons and inputs use a 4px radius; panel/battle frames use 5px; native dialogs
 - `Icon`, `PepePortrait`, `Modal`, `AddressLink` in `web/src/ui.tsx`: original SVG marks, faction portrait, native modal focus management, and full checksummed/copyable explorer links. `Modal` uses `showModal()`, native background inertness, Escape handling and focus return. Irreversible owner actions receive explicit consequence text.
 - `.primary`, `.icon-button`, `.text-button`, `.danger-button`: shared button treatments. Defaults are 44px; some in-scene and navigation controls use smaller, spaced targets. Disabled controls are native-disabled, with explanations nearby. Focus uses the shared perimeter token.
 - `.segmented`: two-state mode/direction selectors with `aria-pressed`; no hidden scroll strip.
-- `Scene` in `web/src/Scene.tsx`: GPU scene, original geometry, drag selection, same-rank double-click, control groups, waypoints, camera and minimap API. The animation layer never authorizes rewards. A WebGL failure displays the original cover with a clear notice and retains the semantic order controls.
+- `Scene` in `web/src/Scene.tsx`: GPU scene, original geometry, drag selection, same-rank double-click, control groups, waypoints, camera and minimap API. Recruitment retains existing meshes, selection, groups and queued movement. `pathing.ts` routes around mesh-derived base, structure, rock and barricade bounds with 1.4 world units of body clearance. Destinations inside solids project to a walkable perimeter; new construction reroutes existing waypoint queues. The animation layer never authorizes rewards. A WebGL failure displays the original cover with a clear notice and retains the semantic order controls.
 - The battlefield and `OrderButton` pattern in `web/src/App.tsx`: synchronized ore/army/point/turn display, explicit disabled reasons, faction/difficulty setup, pause/results and a local order log. The same strategic order labels apply in practice and wallet modes.
 - `Exchange` and `Operations`: forms reuse `.panel`, `.data-list`, `.field-pair`, `.button-row`, `.notice` and `.error`. The single visible next step reflects live allowances. Quote errors and wallet errors persist with recovery controls.
 - `.transaction-status`: persistent, labeled simulation/signature/pending/success/error/uncertain feedback with the available explorer transaction link. It never disappears on a timer.

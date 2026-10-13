@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { erc20Abi, type Address } from "viem";
 import type { Chain } from "./useChain";
 import { amount, errorMessage, exactUnits } from "./chain";
@@ -10,6 +10,9 @@ export type Confirm = (
   run: () => Promise<unknown>,
 ) => void;
 type Quote = {
+  key: string;
+  request: number;
+  account: Address;
   input: Address;
   inputSymbol: string;
   outputSymbol: string;
@@ -20,6 +23,9 @@ type Quote = {
   allowance: bigint;
   permitAmount: bigint;
   expiration: number;
+  decimals: number;
+  outputDecimals: number;
+  slippage: string;
 };
 export function Exchange({
   chain,
@@ -31,11 +37,17 @@ export function Exchange({
   const [direction, setDirection] = useState("buy"),
     [value, setValue] = useState(""),
     [slippage, setSlippage] = useState("0.5");
-  const [quote, setQuote] = useState<Quote>(),
+  const [storedQuote, setQuote] = useState<Quote>(),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [now, setNow] = useState(Date.now());
   const { runtime, service, account } = chain;
+  const key = JSON.stringify([
+    direction, value, slippage, account.address, account.chainId, chain.ready,
+  ]);
+  const currentKey = useRef(key), request = useRef(0);
+  currentKey.current = key;
+  const quote = storedQuote?.key === key ? storedQuote : undefined;
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
@@ -43,7 +55,10 @@ export function Exchange({
   useEffect(() => {
     setQuote(undefined);
     setError("");
-  }, [direction, value, slippage, account.address, account.chainId]);
+    setBusy(false);
+    // Invalidate both input changes and requests that finish after unmount.
+    return () => { request.current++; };
+  }, [key, service]);
   if (!runtime || !service) return <p>Loading pool configuration…</p>;
   const r = runtime,
     s = service,
@@ -56,19 +71,28 @@ export function Exchange({
   const decimals = direction === "buy" ? pair.decimals : 18,
     outputDecimals = direction === "buy" ? 18 : pair.decimals;
   const isExpired = !!quote && now - quote.at > 30000;
-  async function allowances(input: Address) {
+  const isCurrent = (q: Pick<Quote, "key" | "request">) =>
+    q.key === currentKey.current && q.request === request.current;
+  function requireCurrent(q: Quote) {
+    if (!isCurrent(q)) throw Error("Quote inputs or wallet changed. Get a fresh quote.");
+    if (Date.now() - q.at > 30000)
+      throw Error("Quote expired. Get a fresh quote before continuing.");
+  }
+  async function allowances(input: Address, owner: Address) {
     const [allowance, permit] = await Promise.all([
-      s.allowance(input, account.address!, uni.permit2),
+      s.allowance(input, owner, uni.permit2),
       r.client.readContract({
         address: uni.permit2,
         abi: permitAbi,
         functionName: "allowance",
-        args: [account.address!, input, uni.universalRouter],
+        args: [owner, input, uni.universalRouter],
       }),
     ]);
     return { allowance, permitAmount: permit[0], expiration: permit[1] };
   }
   async function getQuote() {
+    if (!chain.ready || !account.address) return;
+    const snapshot = { key, request: ++request.current, account: account.address };
     setBusy(true);
     setError("");
     setQuote(undefined);
@@ -110,20 +134,27 @@ export function Exchange({
         (result[0] * BigInt(10000 - Math.round(slip * 100))) / 10000n;
       if (minimum <= 0n || minimum >= 2n ** 128n)
         throw Error("Quoted minimum is outside the supported range.");
+      const at = Date.now();
+      const permission = await allowances(input, snapshot.account);
+      if (!isCurrent(snapshot)) return;
       setQuote({
+        ...snapshot,
         input,
         inputSymbol,
         outputSymbol,
         inputAmount,
         output: result[0],
         minimum,
-        at: Date.now(),
-        ...(await allowances(input)),
+        decimals,
+        outputDecimals,
+        slippage,
+        at,
+        ...permission,
       });
     } catch (e) {
-      setError(errorMessage(e));
+      if (isCurrent(snapshot)) setError(errorMessage(e));
     } finally {
-      setBusy(false);
+      if (isCurrent(snapshot)) setBusy(false);
     }
   }
   const needsToken = quote && quote.allowance < quote.inputAmount;
@@ -132,53 +163,57 @@ export function Exchange({
     (quote.permitAmount < quote.inputAmount ||
       quote.expiration < Date.now() / 1000 + 120);
   const review = () => {
-    if (!quote) return;
+    if (!quote || !isCurrent(quote) || !chain.ready || chain.pending) return;
     const q = quote;
     if (needsToken)
       confirm(
         `Approve ${q.inputSymbol}`,
-        `Allow Permit2 to spend exactly ${amount(q.inputAmount, decimals, 8)} ${q.inputSymbol}. This is step 1 of 3; no swap happens yet.`,
+        `Allow Permit2 to spend exactly ${amount(q.inputAmount, q.decimals, 8)} ${q.inputSymbol}. This is step 1 of 3; no swap happens yet.`,
         async () => {
+          requireCurrent(q);
           await s.write(
             "Approve token to Permit2",
-            input,
+            q.input,
             erc20Abi,
             "approve",
             [uni.permit2, q.inputAmount],
           );
-          setQuote({ ...q, ...(await allowances(input)) });
+          const permission = await allowances(q.input, q.account);
+          if (isCurrent(q)) setQuote({ ...q, ...permission });
           await chain.refresh(true);
         },
       );
     else if (needsPermit)
       confirm(
         "Approve router spending",
-        `Allow the configured Universal Router to use exactly ${amount(q.inputAmount, decimals, 8)} ${q.inputSymbol} through Permit2 for 30 minutes. Step 2 of 3.`,
+        `Allow the configured Universal Router to use exactly ${amount(q.inputAmount, q.decimals, 8)} ${q.inputSymbol} through Permit2 for 30 minutes. Step 2 of 3.`,
         async () => {
+          requireCurrent(q);
           const block = await r.client.getBlock();
+          requireCurrent(q);
           await s.write(
             "Approve router in Permit2",
             uni.permit2,
             permitAbi,
             "approve",
             [
-              input,
+              q.input,
               uni.universalRouter,
               q.inputAmount,
               Number(block.timestamp) + 1800,
             ],
           );
-          setQuote({ ...q, ...(await allowances(input)) });
+          const permission = await allowances(q.input, q.account);
+          if (isCurrent(q)) setQuote({ ...q, ...permission });
         },
       );
     else
       confirm(
         "Review swap",
-        `Spend ${amount(q.inputAmount, decimals, 8)} ${q.inputSymbol}. Receive at least ${amount(q.minimum, outputDecimals, 8)} ${q.outputSymbol}. Pool fee: ${(r.config.poolKey.fee / 10000).toFixed(2)}%. Slippage: ${slippage}%. Network gas applies.`,
+        `Spend ${amount(q.inputAmount, q.decimals, 8)} ${q.inputSymbol}. Receive at least ${amount(q.minimum, q.outputDecimals, 8)} ${q.outputSymbol}. Pool fee: ${(r.config.poolKey.fee / 10000).toFixed(2)}%. Slippage: ${q.slippage}%. Network gas applies.`,
         async () => {
-          if (Date.now() - q.at > 30000)
-            throw Error("Quote expired. Get a fresh quote before swapping.");
-          const permission = await allowances(input);
+          requireCurrent(q);
+          const permission = await allowances(q.input, q.account);
           if (
             permission.allowance < q.inputAmount ||
             permission.permitAmount < q.inputAmount ||
@@ -187,6 +222,7 @@ export function Exchange({
             throw Error("Approval changed. Get a fresh quote.");
           const payload = swapPayload(r, q.input, q.inputAmount, q.minimum),
             block = await r.client.getBlock();
+          requireCurrent(q);
           await s.write(
             "Swap tokens",
             uni.universalRouter,
@@ -195,8 +231,10 @@ export function Exchange({
             [payload.commands, payload.inputs, block.timestamp + 120n],
             0n,
           );
-          setQuote(undefined);
-          setValue("");
+          if (isCurrent(q)) {
+            setQuote(undefined);
+            setValue("");
+          }
           await chain.refresh(true);
         },
       );
@@ -269,11 +307,11 @@ export function Exchange({
               <div className="quote-result">
                 <span>Estimated receive</span>
                 <strong>
-                  {amount(quote.output, outputDecimals)} {outputSymbol}
+                  {amount(quote.output, quote.outputDecimals)} {quote.outputSymbol}
                 </strong>
                 <span>
-                  Minimum {amount(quote.minimum, outputDecimals, 8)}{" "}
-                  {outputSymbol}
+                  Minimum {amount(quote.minimum, quote.outputDecimals, 8)}{" "}
+                  {quote.outputSymbol}
                 </span>
                 <span>
                   {isExpired
@@ -307,7 +345,7 @@ export function Exchange({
                 onClick={review}
               >
                 {needsToken
-                  ? `1. Approve ${inputSymbol}`
+                  ? `1. Approve ${quote.inputSymbol}`
                   : needsPermit
                     ? "2. Approve router"
                     : "3. Review swap"}
